@@ -9,7 +9,7 @@ if [ -x "$(command -v doas)" ]; then
 	case $yn in
 		[yY][eE][sS]|[yY]) sudo=doas;;
 		[nN][oO]|[nN]) continue;;
-		*) printf "Invalid input";;
+		*) printf "Invalid input\n";;
 	esac
 fi
 
@@ -29,7 +29,7 @@ else
 			makepkg
 			;;
 		[nN][oO]|[nN]) continue;;
-		*) printf "Invalid input";;
+		*) printf "Invalid input\n";;
 	esac
 fi
 
