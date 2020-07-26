@@ -66,7 +66,7 @@ while true; do
 	case $choice in
 		1) clear ; dots ; software;;
 		2) clear ; dots;;
-		3) clear ; software ;;
+		3) clear ; software;;
 		*) printf "Invalid input\n";;
 	esac
 done
