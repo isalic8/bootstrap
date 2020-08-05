@@ -56,6 +56,13 @@ function dots{
 function software{
 	printf "INSTALLING SOFTWARE\n"
 	yay -S --noconfirm - < packages 
+	cd /opt	
+	$sudo git clone https://gitlab.com/peternix/dwm
+	$sudo git clone https://gitlab.com/peternix/st
+	$sudo git clone https://gitlab.com/peternix/slstatus
+	$sudo make clean install -C dwm/
+	$sudo make clean install -C st/
+	$sudo make clean install -C slstatus/
 }
 
 # Action prompt

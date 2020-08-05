@@ -1,4 +1,11 @@
 aircrack-ng
+acpi
+catdoc
+odt2txt
+ffmpegthumbnailer
+imagemagick
+gnome-epub-thumbnailer
+bc
 alsa-utils
 bluez-utils
 brightnessctl
@@ -30,7 +37,7 @@ p7zip
 pacman
 parted
 patch
-picom
+picom-tryone-git
 pulseaudio-alsa
 pulseaudio-bluetooth
 pulsemixer
