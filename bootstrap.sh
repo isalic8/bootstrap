@@ -63,6 +63,7 @@ function software{
 	$sudo make clean install -C dwm/
 	$sudo make clean install -C st/
 	$sudo make clean install -C slstatus/
+	npm -g install instant-markdown-d
 }
 
 # Action prompt
