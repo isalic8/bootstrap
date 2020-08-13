@@ -5,6 +5,8 @@ nodejs
 pandoc
 texlive-most
 texlive-lang
+cowsay
+figlet
 mlocate
 reflector
 adobe-source-code-pro-fonts
