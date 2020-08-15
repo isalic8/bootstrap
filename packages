@@ -49,6 +49,13 @@ ntfs-3g
 nyancat
 opendoas
 openssh
+fbreader
+xsel
+iftop
+iotop
+glances
+slurm
+lsof
 p7zip
 pacman
 parted
