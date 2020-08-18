@@ -22,9 +22,11 @@ else
 		[yY][eE][sS]|[yY]) 
 			printf "Checking if makepkg is installed...\n"
 			[ -x "$(command -v makepkg)" ] || $sudo pacman -S base-devel --noconfirm
+			printf "Checking if go is installed...\n"
+			[ -x "$(command -v go)" ] || $sudo pacman -S go --noconfirm
 			printf "Checking if git is installed...\n"
 			[ -x "$(command -v git)" ] || $sudo pacman -S git --noconfirm
-			git clone https://aur.archlinux.org/yay.git /tmp
+			git clone https://aur.archlinux.org/yay.git /tmp/yay
 			cd /tmp/yay
 			makepkg
 			;;
@@ -34,7 +36,7 @@ else
 fi
 
 # Install dotfiles
-function dots{
+function dots {
 	if [ -x "$(command -v stow)" ]; then
 		break
 	else
@@ -53,7 +55,7 @@ function dots{
 }
 
 # Installing software
-function software{
+function software {
 	printf "INSTALLING SOFTWARE\n"
 	yay -S --noconfirm - < packages 
 	cd /opt	

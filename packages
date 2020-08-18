@@ -1,4 +1,11 @@
 aircrack-ng
+ntp
+msmtp
+isync
+pass
+resolvconf
+mpv
+youtube-dl
 xdg-utils
 curl
 nodejs
