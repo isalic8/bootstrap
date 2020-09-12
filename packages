@@ -7,6 +7,9 @@ resolvconf
 mpv
 youtube-dl
 xdg-utils
+npm
+dosfstools
+dvd+rw-tools
 curl
 nodejs
 pandoc
@@ -20,6 +23,10 @@ adobe-source-code-pro-fonts
 urlscan
 task-spooler
 nmap
+shellcheck
+lib32-alsa-plugins
+lib32-libpulse
+lib32-openal
 ttf-nerd-fonts-symbols
 awesome-terminal-fonts
 acpi
