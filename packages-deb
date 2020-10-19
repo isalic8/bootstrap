@@ -1,5 +1,8 @@
 cmake
 nfs-common
+brightnessctl
+pipenv
+python3-pip
 zstd
 curl
 libxinerama-dev
