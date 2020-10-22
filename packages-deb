@@ -15,6 +15,11 @@ qemu
 qemu-kvm
 qemu-system-x86
 tigervnc-viewer
+php
+ufw
+wine
+winetricks
+transmission-daemon
 grub-imageboot
 imagemagick
 nfs-common
