@@ -20,6 +20,7 @@ ufw
 wine
 winetricks
 transmission-daemon
+sysstat
 grub-imageboot
 imagemagick
 nfs-common
