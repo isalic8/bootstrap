@@ -1,83 +1,66 @@
 #!/bin/sh
-# Pulls my software and dotfile. Requires Arch Linux.
-# Run this on a fresh user account with an empty home directory.
-# Stow doesn't overwrite files. If a directory/file already exists, it skips it.
 
-# Use doas instead of sudo
-if [ -x "$(command -v doas)" ]; then
-	read -p "Use doas instead of sudo [y/n]? " yn
-	case $yn in
-		[yY][eE][sS]|[yY]) sudo=doas;;
-		[nN][oO]|[nN]) continue;;
-		*) printf "Invalid input\n";;
-	esac
-fi
+clone(){
+	cd /opt
+	git clone gitunix:/srv/git/dwm.git
+	git clone gitunix:/srv/git/slstatus.git
+	git clone gitunix:/srv/git/st.git
+	git clone gitunix:/srv/git/dotfiles.git ~/.dotfiles
+	git clone gitunix:/srv/git/dox.git
+	git clone gitunix:/srv/git/installers.git
+}
 
-# Install AUR helper if not present
-if [ -x "$(command -v yay)" ]; then
-	break
-else
-	read -p "Yay is not installed. Install it? [y/n]? " yn
-	case $yn in
-		[yY][eE][sS]|[yY]) 
-			printf "Checking if makepkg is installed...\n"
-			[ -x "$(command -v makepkg)" ] || $sudo pacman -S base-devel --noconfirm
-			printf "Checking if go is installed...\n"
-			[ -x "$(command -v go)" ] || $sudo pacman -S go --noconfirm
-			printf "Checking if git is installed...\n"
-			[ -x "$(command -v git)" ] || $sudo pacman -S git --noconfirm
-			git clone https://aur.archlinux.org/yay.git /tmp/yay
-			cd /tmp/yay
-			makepkg
-			;;
-		[nN][oO]|[nN]) continue;;
-		*) printf "Invalid input\n";;
-	esac
-fi
+suckless-install(){
+	cd /opt/dwm
+	make clean
+	make 
+	sudo make install
 
-# Install dotfiles
-function dots {
-	if [ -x "$(command -v stow)" ]; then
-		break
-	else
-		read -p "Stow not installed. Install it [y/n]? " yn
-		case $yn in
-			[yY][eE][sS]|[yY]) $sudo pacman -S stow;;
-			[nN][oO]|[nN]) printf "EXITING\n" && exit;;
-			*) printf "Invalid input\n";;
-		esac
+	cd /opt/st
+	make clean
+	make 
+	sudo make install
+
+	cd /opt/slstatus
+	make clean
+	make 
+	sudo make install
+}
+
+software-install(){
+	sudo aptitude install -y $(grep -vE "^\s*#" /opt/bootstrap/packages-deb | tr "\n" " ")
+}
+
+misc-install(){
+	cd /opt/installers
+	./nyancat
+	./tty-clock
+	./tmux
+	./arch-wiki
+	./adobe-source-code-pro
+	./sent
+}
+
+disable-services(){
+	init = openrc
+	if [ "$init" = "openrc" ]; then
+		sudo rc-update del apache2
+		sudo rc-service apache2 stop
+		sudo rc-update del lightdm
+		sudo rc-update del slim
+	elif [ "$init" = "systemd" ]; then
+		sudo systemctl disable apache2 
+		sudo systemctl stop apache2 
+		sudo systemctl disable lightdm 
+		sudo systemctl disable slim 
 	fi
-
-	printf "INSTALLING DOTFILES\n"
-	git clone https://gitlab.com/peternix/dotfiles $HOME/.dotfiles
-	cd $HOME/.dotfiles
-	stow *
 }
 
-# Installing software
-function software {
-	printf "INSTALLING SOFTWARE\n"
-	yay -S --noconfirm - < packages 
-	cd /opt	
-	$sudo git clone https://gitlab.com/peternix/dwm
-	$sudo git clone https://gitlab.com/peternix/st
-	$sudo git clone https://gitlab.com/peternix/slstatus
-	$sudo make clean install -C dwm/
-	$sudo make clean install -C st/
-	$sudo make clean install -C slstatus/
-	npm -g install instant-markdown-d
+misc-setup(){
 }
 
-# Action prompt
-clear
-while true; do
-	printf "Choose install:\n[1] All\n[2] Dotfiles\n[3] Software\n[4] Ungoogled-chromium (not included in [1])\n\nChoice: "
-	read choice
-	case $choice in
-		1) clear ; dots ; software;;
-		2) clear ; dots;;
-		3) clear ; software;;
-		*) printf "Invalid input\n";;
-	esac
-done
-
+clone
+software-install
+suckless-install
+misc-install
+disable-services

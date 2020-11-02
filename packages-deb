@@ -91,7 +91,13 @@ joystick
 jstest-gtk
 figlet
 cowsay
+dmenu
+acpi
 make
+dunst
+libnotify-bin
+rsync
+xinput
 libc6-dev
 libirrlicht-dev
 cmake
