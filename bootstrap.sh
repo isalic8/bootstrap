@@ -57,10 +57,13 @@ disable-services(){
 }
 
 misc-setup(){
+	mkdir ~/.cache/zsh
+	chsh -s /usr/bin/zsh
 }
 
 clone
 software-install
 suckless-install
 misc-install
+misc-setup
 disable-services

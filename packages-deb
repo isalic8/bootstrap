@@ -54,6 +54,8 @@ autotools-dev
 automake
 libevent-dev
 libncurses-dev
+wicd-curses
+golang
 tor
 proxychains
 urlscan
@@ -98,6 +100,8 @@ dunst
 libnotify-bin
 rsync
 xinput
+jmtpfs
+mtp-tools
 libc6-dev
 libirrlicht-dev
 cmake
@@ -115,3 +119,13 @@ libfreetype6-dev
 zlib1g-dev
 libgmp-dev
 libjsoncpp-dev
+libcdio-utils
+catdoc
+docx2txt
+odt2txt
+poppler-utils
+epub-utils
+highlight
+npm
+msttcorefonts
+qutebrowser
