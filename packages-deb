@@ -26,6 +26,10 @@ imagemagick
 nfs-common
 brightnessctl
 python3-pip
+python-pip
+pandoc
+texlive-full
+texlive-xetex
 zstd
 zathura
 zathura-pdf-poppler
