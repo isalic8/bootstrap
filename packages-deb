@@ -29,12 +29,13 @@ python3-pip
 python-pip
 pandoc
 texlive-full
+mlocate
 texlive-xetex
 zstd
 zathura
 zathura-pdf-poppler
 lzip
-p7zip
+p7zip-full
 nmon
 tomb
 aircrack-ng

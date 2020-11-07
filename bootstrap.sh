@@ -57,8 +57,11 @@ disable-services(){
 }
 
 misc-setup(){
-	mkdir ~/.cache/zsh
-	chsh -s /usr/bin/zsh
+	#mkdir ~/.cache/zsh
+	#chsh -s /usr/bin/zsh
+	sudo updatedb
+	sudo sed -i 's/socks4/socks5/g' /etc/proxychains.conf
+	sudo sed -i 's/#quiet_mode/quiet_mode/g' /etc/proxychains.conf
 }
 
 clone
