@@ -36,6 +36,7 @@ zathura
 zathura-pdf-poppler
 lzip
 p7zip-full
+smartmontools
 nmon
 tomb
 aircrack-ng
