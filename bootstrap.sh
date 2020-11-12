@@ -6,12 +6,12 @@ clone(){
 	git clone gitunix:/srv/git/slstatus.git
 	git clone gitunix:/srv/git/st.git
 	git clone gitunix:/srv/git/dotfiles.git ~/.dotfiles
-	git clone gitunix:/srv/git/dox.git
+	git clone gitunix:/srv/git/dox.git ~/dox
 	git clone gitunix:/srv/git/installers.git
 	git clone gitunix:/srv/git/ebooks.git
 }
 
-suckless-install(){
+suckless_install(){
 	cd /opt/dwm
 	make clean
 	make 
@@ -28,37 +28,35 @@ suckless-install(){
 	sudo make install
 }
 
-software-install(){
+software_install(){
+	sudo apt install aptitude -y
 	sudo aptitude install -y $(grep -vE "^\s*#" /opt/bootstrap/packages-deb | tr "\n" " ")
+	sudo apt remove mate-notification-daemon mate-notification-daemon-common -y
+	sudo apt remove youtube-dl -y
 }
 
-misc-install(){
+misc_install(){
 	cd /opt/installers
 	./nyancat
 	./tty-clock
 	./tmux
+	./lf-source
 	./arch-wiki
-	./adobe-source-code-pro
 	./sent
+	./adobe-source-code-pro
+	./font-terminus
+	./python3.9
 }
 
-disable-services(){
-	init = openrc
-	if [ "$init" = "openrc" ]; then
-		sudo rc-update del apache2
-		sudo rc-update del lightdm
-		sudo rc-update del smbd
-		sudo rc-update del samba-ad-dc
-		sudo rc-update del slim
-	elif [ "$init" = "systemd" ]; then
-		sudo systemctl disable apache2 
-		sudo systemctl disable samba
-		sudo systemctl disable lightdm 
-		sudo systemctl disable slim 
-	fi
+disable_services(){
+	sudo rc-update del apache2
+	sudo rc-update del lightdm
+	sudo rc-update del smbd
+	sudo rc-update del samba-ad-dc
+	sudo rc-update del slim
 }
 
-misc-setup(){
+misc_setup(){
 	sudo updatedb
 	sudo sed -i 's/socks4/socks5/g' /etc/proxychains.conf
 	sudo sed -i 's/#quiet_mode/quiet_mode/g' /etc/proxychains.conf
@@ -67,8 +65,8 @@ misc-setup(){
 }
 
 clone
-software-install
-suckless-install
-misc-install
-misc-setup
-disable-services
+software_install
+suckless_install
+misc_install
+misc_setup
+disable_services
