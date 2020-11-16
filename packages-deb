@@ -147,6 +147,7 @@ tlp
 tp-smapi-dkms
 i3lock
 ufw
+rxvt-unicode-color256
 libreadline-dev
 libconfig-dev
 libssl-dev
