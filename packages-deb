@@ -146,3 +146,12 @@ libbz2-dev
 tlp
 tp-smapi-dkms
 i3lock
+ufw
+libreadline-dev
+libconfig-dev
+libssl-dev
+lua5.2
+liblua5.2-dev
+libevent-dev
+libjansson-dev
+libpython-dev

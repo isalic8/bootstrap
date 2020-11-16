@@ -45,7 +45,6 @@ misc_install(){
 	./sent
 	./adobe-source-code-pro
 	./font-terminus
-	./python3.9
 }
 
 disable_services(){
@@ -54,14 +53,17 @@ disable_services(){
 	sudo rc-update del smbd
 	sudo rc-update del samba-ad-dc
 	sudo rc-update del slim
+	sudo rc-update del transmission-daemon
 }
 
 misc_setup(){
+	# Update locate database
 	sudo updatedb
-	sudo sed -i 's/socks4/socks5/g' /etc/proxychains.conf
-	sudo sed -i 's/#quiet_mode/quiet_mode/g' /etc/proxychains.conf
-	sudo /etc/init.d/transmission-daemon stop
-	sudo sed -i 's;rpc-authentication-required: true;rpc-authentication-required: false;g' /etc/transmission-daemon/settings.json
+	# Black list sound drivers to disable microphone
+	sudo echo "blacklist snd_hda_intel" >> /etc/modprobe.d/blacklist.conf
+	sudo echo "blacklist thinkpad_acpi" >> /etc/modprobe.d/blacklist.conf
+	# Uncomplicated firewall
+	sudo ufw enable
 }
 
 clone
