@@ -45,12 +45,14 @@ misc_install(){
 	./sent
 	./adobe-source-code-pro
 	./font-terminus
+	./tor-browser
 }
 
 disable_services(){
 	sudo rc-update del apache2
 	sudo rc-update del lightdm
 	sudo rc-update del smbd
+	sudo rc-update del exim4
 	sudo rc-update del samba-ad-dc
 	sudo rc-update del slim
 	sudo rc-update del transmission-daemon

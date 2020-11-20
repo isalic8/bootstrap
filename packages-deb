@@ -147,7 +147,6 @@ tlp
 tp-smapi-dkms
 i3lock
 ufw
-rxvt-unicode-color256
 libreadline-dev
 libconfig-dev
 libssl-dev
@@ -156,3 +155,15 @@ liblua5.2-dev
 libevent-dev
 libjansson-dev
 libpython-dev
+bats
+testdisk
+mypaint
+winetricks
+arch-install-scripts
+dosfstools
+e2fsprogs
+libisoburn1
+mtools
+squashfs-tools
+shellcheck
+ovmf
