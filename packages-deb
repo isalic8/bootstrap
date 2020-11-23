@@ -168,3 +168,5 @@ squashfs-tools
 shellcheck
 ovmf
 gimp
+firmware-linux-nonfree
+firmware-realtek
