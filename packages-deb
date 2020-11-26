@@ -19,7 +19,7 @@ qemu-system-x86
 tigervnc-viewer
 php
 ufw
-wine
+wine32
 transmission-daemon
 sysstat
 imagemagick
@@ -170,3 +170,7 @@ ovmf
 gimp
 firmware-linux-nonfree
 firmware-realtek
+sshfs
+obfs4proxy
+obfsproxy 
+dialog

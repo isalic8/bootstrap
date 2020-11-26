@@ -29,6 +29,7 @@ suckless_install(){
 }
 
 software_install(){
+	sudo dpkg--add-architecture i386 && sudo apt update
 	sudo apt install aptitude -y
 	sudo aptitude install -y $(grep -vE "^\s*#" /opt/bootstrap/packages-deb | tr "\n" " ")
 	sudo apt remove mate-notification-daemon mate-notification-daemon-common -y
@@ -66,6 +67,20 @@ misc_setup(){
 	sudo echo "blacklist thinkpad_acpi" >> /etc/modprobe.d/blacklist.conf
 	# Uncomplicated firewall
 	sudo ufw enable
+	# Flatpak repos
+	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+	# Tor with obfs4 bridges
+	sudo echo "UseBridges 1" >> /etc/tor/torrc
+	sudo echo "ClientTransportPlugin obfs2,obfs3,obfs4,scramblesuit exec /usr/bin/obfs4proxy" >> /etc/tor/torrc
+	sudo echo "Bridge obfs4 38.229.33.140:57275 EC4F9DA66F520A094E5B534AA08DFC1AB5E95B64 cert=OJJtSTddonrjXMCWGX97lIagsGtGiFnUI6t/OGFbKtpvWiFEfS0sLBnhLmHUENLoW1soeg iat-mode=1" >> /etc/tor/torrc
+	# Set battery charge threshold on thinkpad
+	sudo sed 's/#START_CHARGE_THRESH_BAT0=75/START_CHARGE_THRESH_BAT0=75/g' /etc/default/tlp
+	sudo sed 's/#STOP_CHARGE_THRESH_BAT0=80/STOP_CHARGE_THRESH_BAT0=80/g' /etc/default/tlp
+	sudo rc-service tlp restart
+
+
+
+
 }
 
 clone
