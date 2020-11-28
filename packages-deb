@@ -20,6 +20,7 @@ tigervnc-viewer
 php
 ufw
 wine32
+mesa-utils
 transmission-daemon
 sysstat
 imagemagick
@@ -172,5 +173,11 @@ firmware-linux-nonfree
 firmware-realtek
 sshfs
 obfs4proxy
-obfsproxy 
+obfsproxy
 dialog
+firmware-intel-sound
+pulsemixer
+tint
+mpd
+ncmpcpp
+mpc

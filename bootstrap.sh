@@ -77,10 +77,9 @@ misc_setup(){
 	sudo sed 's/#START_CHARGE_THRESH_BAT0=75/START_CHARGE_THRESH_BAT0=75/g' /etc/default/tlp
 	sudo sed 's/#STOP_CHARGE_THRESH_BAT0=80/STOP_CHARGE_THRESH_BAT0=80/g' /etc/default/tlp
 	sudo rc-service tlp restart
-
-
-
-
+	# Swappiness level to avoid ssd wear
+	sudo sysctl vm.swappiness=5
+	sudo usermod -a -G lp,floppy,dialout,audio,video,cdrom,plugdev,netdev,scanner $USER
 }
 
 clone
