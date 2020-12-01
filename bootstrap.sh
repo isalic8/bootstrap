@@ -47,6 +47,9 @@ misc_install(){
 	./adobe-source-code-pro
 	./font-terminus
 	./tor-browser
+	./cmatrix
+	./youtube-dl
+	./xbanish
 }
 
 disable_services(){
@@ -57,6 +60,7 @@ disable_services(){
 	sudo rc-update del samba-ad-dc
 	sudo rc-update del slim
 	sudo rc-update del transmission-daemon
+	sudo rc-update del mpd
 }
 
 misc_setup(){
@@ -74,12 +78,16 @@ misc_setup(){
 	sudo echo "ClientTransportPlugin obfs2,obfs3,obfs4,scramblesuit exec /usr/bin/obfs4proxy" >> /etc/tor/torrc
 	sudo echo "Bridge obfs4 38.229.33.140:57275 EC4F9DA66F520A094E5B534AA08DFC1AB5E95B64 cert=OJJtSTddonrjXMCWGX97lIagsGtGiFnUI6t/OGFbKtpvWiFEfS0sLBnhLmHUENLoW1soeg iat-mode=1" >> /etc/tor/torrc
 	# Set battery charge threshold on thinkpad
-	sudo sed 's/#START_CHARGE_THRESH_BAT0=75/START_CHARGE_THRESH_BAT0=75/g' /etc/default/tlp
-	sudo sed 's/#STOP_CHARGE_THRESH_BAT0=80/STOP_CHARGE_THRESH_BAT0=80/g' /etc/default/tlp
+	sudo sed -i 's/#START_CHARGE_THRESH_BAT0=75/START_CHARGE_THRESH_BAT0=75/g' /etc/default/tlp
+	sudo sed -i 's/#STOP_CHARGE_THRESH_BAT0=80/STOP_CHARGE_THRESH_BAT0=80/g' /etc/default/tlp
 	sudo rc-service tlp restart
 	# Swappiness level to avoid ssd wear
 	sudo sysctl vm.swappiness=5
 	sudo usermod -a -G lp,floppy,dialout,audio,video,cdrom,plugdev,netdev,scanner $USER
+	# Disables beep sound on xterm
+	sudo echo "blacklist pcspkr" >> /etc/modprobe.d/blacklist.conf
+	# Enable firejail for every application
+	sudo firecfg
 }
 
 clone
