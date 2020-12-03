@@ -86,8 +86,6 @@ misc_setup(){
 	sudo usermod -a -G lp,floppy,dialout,audio,video,cdrom,plugdev,netdev,scanner $USER
 	# Disables beep sound on xterm
 	sudo echo "blacklist pcspkr" >> /etc/modprobe.d/blacklist.conf
-	# Enable firejail for every application
-	sudo firecfg
 }
 
 clone
