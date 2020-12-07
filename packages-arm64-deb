@@ -192,3 +192,5 @@ giblib-dev
 libxcomposite-dev
 wireguard
 wireguard-dkms
+libsdl2-dev
+openmw
