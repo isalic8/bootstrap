@@ -1,6 +1,8 @@
 #!/bin/sh
 ARCH=amd64
+#ARCH=arm
 INIT=systemd
+#INIT=openrc
 
 clone(){
 	cd /opt
@@ -33,7 +35,7 @@ software_install(){
 		sudo aptitude install -y $(grep -vE "^\s*#" /opt/bootstrap/packages--deb | tr "\n" " ")
 	fi
 
-	sudo apt remove mate-notification-daemon mate-notification-daemon-common youtube-dl -y
+	sudo apt remove youtube-dl -y
 }
 
 misc_install(){
@@ -50,6 +52,8 @@ misc_install(){
 	./youtube-dl
 	./xbanish
 	./scrot
+	./unshorten-url-js
+	./undercover
 }
 
 disable_services(){
@@ -63,6 +67,7 @@ disable_services(){
 			sudo rc-update del slim
 			sudo rc-update del transmission-daemon
 			sudo rc-update del mpd
+			sudo rc-update del ssh
 			;;
 		systemd)
 			sudo systemctl disable apache2
@@ -73,6 +78,7 @@ disable_services(){
 			sudo systemctl disable slim
 			sudo systemctl disable transmission-daemon
 			sudo systemctl disable mpd
+			sudo systemctl disable ssh
 			;;
 	esac
 }

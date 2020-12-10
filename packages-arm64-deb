@@ -194,3 +194,9 @@ wireguard
 wireguard-dkms
 libsdl2-dev
 openmw
+surfraw
+surfraw-extra
+flatpak
+meson
+ninja-build
+v4l-utils
