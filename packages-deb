@@ -187,10 +187,8 @@ qemu-system-x86
 winetricks
 qemu-system-x86
 python-pip
-wicd-curses
 acpi
 obfsproxy
-zsnes
 rar
 libxi-dev
 vifm
@@ -199,8 +197,6 @@ pavucontrol
 autoconf-archive
 giblib-dev
 libxcomposite-dev
-wireguard
-wireguard-dkms
 libsdl2-dev
 openmw
 surfraw
@@ -209,3 +205,9 @@ flatpak
 meson
 ninja-build
 v4l-utils
+openbox
+obconf
+#wireguard
+#wireguard-dkms
+#zsnes
+#wicd-curses
