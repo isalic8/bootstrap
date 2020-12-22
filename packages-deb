@@ -207,7 +207,11 @@ ninja-build
 v4l-utils
 openbox
 obconf
-#wireguard
-#wireguard-dkms
-#zsnes
-#wicd-curses
+sc
+unattended-upgrades
+pcmanfm
+zsh
+libolm-dev
+yarn
+gparted
+task-spooler

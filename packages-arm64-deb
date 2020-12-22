@@ -200,3 +200,11 @@ flatpak
 meson
 ninja-build
 v4l-utils
+sc
+unattended-upgrades
+pcmanfm
+zsh
+libolm-dev
+yarn
+gparted
+task-spooler
