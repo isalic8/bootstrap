@@ -217,6 +217,4 @@ gparted
 task-spooler
 conky
 xdotool
-xmonad
-xmobar
-libghc-xmonad-contrib-dev
+bspwm
