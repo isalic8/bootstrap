@@ -101,7 +101,7 @@ misc_setup(){
 #	sudo systemctl restart tlp 
 	# Swappiness level to avoid ssd wear
 	sudo sysctl vm.swappiness=5
-	sudo usermod -a -G lp,floppy,dialout,audio,video,cdrom,plugdev,netdev $USER
+	sudo usermod -aG lp,lpadmin,floppy,dialout,audio,video,cdrom,plugdev,netdev $USER
 	# Disables beep sound on xterm
 #	sudo echo "blacklist pcspkr" >> /etc/modprobe.d/blacklist.conf
 }

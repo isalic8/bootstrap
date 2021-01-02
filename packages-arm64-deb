@@ -211,3 +211,7 @@ task-spooler
 conky
 xdotool
 bspwm
+lpr
+cups
+cups-client
+rxvt-unicode-256color
