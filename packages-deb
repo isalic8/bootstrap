@@ -1,4 +1,5 @@
 cmake
+netcat
 gitk
 resolvconf
 mpv
@@ -206,7 +207,6 @@ ninja-build
 v4l-utils
 openbox
 obconf
-sc
 unattended-upgrades
 pcmanfm
 zsh
@@ -245,3 +245,7 @@ uthash-dev
 libev-dev
 libx11-xcb-dev
 asciidoc
+xcolorsel
+id3v2
+exiftool
+attr

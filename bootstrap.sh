@@ -36,6 +36,9 @@ software_install(){
 	fi
 
 	sudo apt remove youtube-dl -y
+	npm install intelephense bash-language-server
+	# Language server for coc-vim latex
+	digestif
 }
 
 misc_install(){
@@ -54,6 +57,8 @@ misc_install(){
 	./scrot
 	./unshorten-url-js
 	./undercover
+	./sc-im
+	./gomuks
 }
 
 disable_services(){

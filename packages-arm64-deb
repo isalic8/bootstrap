@@ -1,4 +1,5 @@
 cmake
+netcat
 vifm
 gitk
 resolvconf
@@ -199,7 +200,6 @@ flatpak
 meson
 ninja-build
 v4l-utils
-sc
 unattended-upgrades
 pcmanfm
 zsh
@@ -238,3 +238,7 @@ uthash-dev
 libev-dev
 libx11-xcb-dev
 asciidoc
+xcolorsel
+id3v2
+exiftool
+attr
