@@ -1,4 +1,8 @@
 cmake
+aria2
+man
+dmenu
+polybar
 netcat
 gitk
 resolvconf
@@ -249,3 +253,9 @@ xcolorsel
 id3v2
 exiftool
 attr
+wget
+firmware-linux
+bluez-firmware
+bluez-utils
+blueman
+ffmpegthumbnailer

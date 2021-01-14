@@ -1,4 +1,9 @@
 cmake
+aria2
+ffmpegthumbnailer
+man
+dmenu
+polybar
 netcat
 vifm
 gitk
@@ -242,3 +247,7 @@ xcolorsel
 id3v2
 exiftool
 attr
+wget
+bluez-firmware
+bluez-utils
+blueman

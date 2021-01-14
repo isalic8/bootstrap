@@ -12,6 +12,7 @@ clone(){
 	git clone github:/isalic8/dotfiles.git ~/.dotfiles
 	git clone github:/isalic8/dox.git ~/dox
 	git clone github:/isalic8/installers.git
+	git clone github:/isalic8/env.git
 }
 
 suckless_install(){
@@ -27,16 +28,18 @@ suckless_install(){
 }
 
 software_install(){
-	sudo apt install aptitude -y
+	/bin/bash -c "$(curl -sL https://git.io/vokNn)"
+	sudo apt install aptitude aria2 -y
 	if [ "$ARCH=arm" ]; then
-		sudo aptitude install -y $(grep -vE "^\s*#" /opt/bootstrap/packages-arm64-deb | tr "\n" " ")
+		sudo apt-fast install -y $(grep -vE "^\s*#" /opt/bootstrap/packages-arm64-deb | tr "\n" " ")
 	else
 		sudo dpkg--add-architecture i386 && sudo apt update
-		sudo aptitude install -y $(grep -vE "^\s*#" /opt/bootstrap/packages--deb | tr "\n" " ")
+		sudo apt-fast install -y $(grep -vE "^\s*#" /opt/bootstrap/packages-deb | tr "\n" " ")
 	fi
 
 	sudo apt remove youtube-dl -y
-	npm install intelephense bash-language-server
+	npm install -g intelephense bash-language-server
+	pip3 install --user $(cat /opt/bootstrap/packages-python)
 	# Language server for coc-vim latex
 	digestif
 }
@@ -89,6 +92,8 @@ disable_services(){
 }
 
 misc_setup(){
+	# Download tldr database
+	tldr -u
 	# Update locate database
 	sudo updatedb
 	# Uncomplicated firewall
