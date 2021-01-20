@@ -38,7 +38,7 @@ software_install(){
 	fi
 
 	sudo apt remove youtube-dl -y
-	npm install -g intelephense bash-language-server
+	npm install -g bash-language-server
 	pip3 install --user $(cat /opt/bootstrap/packages-python)
 	# Language server for coc-vim latex
 	digestif
@@ -114,6 +114,8 @@ misc_setup(){
 	sudo usermod -aG lp,lpadmin,floppy,dialout,audio,video,cdrom,plugdev,netdev $USER
 	# Disables beep sound on xterm
 #	sudo echo "blacklist pcspkr" >> /etc/modprobe.d/blacklist.conf
+	# Change swappiness level to something flash friendly
+	sudo sysctl vm.swappiness=5
 }
 
 clone
