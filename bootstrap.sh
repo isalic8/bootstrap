@@ -1,6 +1,5 @@
 #!/bin/sh
-ARCH=amd64
-#ARCH=arm
+ARCH=$(arch)
 INIT=systemd
 #INIT=openrc
 
@@ -28,13 +27,15 @@ suckless_install(){
 }
 
 software_install(){
-	/bin/bash -c "$(curl -sL https://git.io/vokNn)"
-	sudo apt install aptitude aria2 -y
-	if [ "$ARCH=arm" ]; then
-		sudo apt-fast install -y $(grep -vE "^\s*#" /opt/bootstrap/packages-arm64-deb | tr "\n" " ")
+	#/bin/bash -c "$(curl -sL https://git.io/vokNn)"
+	#sudo apt install aptitude aria2 -y
+	if [ "$ARCH" = "arm64" ] || [ "$ARCH" = "aarch64" ]; then
+		#sudo apt-fast install -y $(grep -vE "^\s*#" /opt/bootstrap/packages-arm64-deb | tr "\n" " ")
+		sudo apt install -y $(grep -vE "^\s*#" /opt/bootstrap/packages-arm64-deb | tr "\n" " ")
 	else
 		sudo dpkg--add-architecture i386 && sudo apt update
-		sudo apt-fast install -y $(grep -vE "^\s*#" /opt/bootstrap/packages-deb | tr "\n" " ")
+		#sudo apt-fast install -y $(grep -vE "^\s*#" /opt/bootstrap/packages-deb | tr "\n" " ")
+		sudo apt install -y $(grep -vE "^\s*#" /opt/bootstrap/packages-deb | tr "\n" " ")
 	fi
 
 	sudo apt remove youtube-dl -y
@@ -53,6 +54,7 @@ misc_install(){
 	./sent
 	./adobe-source-code-pro
 	./font-terminus
+	./font-symbola
 	./tor-browser
 	./cmatrix
 	./youtube-dl
@@ -62,6 +64,7 @@ misc_install(){
 	./undercover
 	./sc-im
 	./gomuks
+	./mutt-wizard
 }
 
 disable_services(){
