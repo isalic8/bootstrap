@@ -119,6 +119,8 @@ misc_setup(){
 #	sudo echo "blacklist pcspkr" >> /etc/modprobe.d/blacklist.conf
 	# Change swappiness level to something flash friendly
 	sudo sysctl vm.swappiness=5
+	# Setting default applications
+	xdg-mime default feh.desktop image/png image/jpeg image/jpg
 }
 
 clone
