@@ -253,3 +253,6 @@ bluez-utils
 blueman
 wmctrl
 devscripts
+fontconfig
+obs-studio
+v4l2loopback-dkms
