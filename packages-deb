@@ -1,4 +1,5 @@
 cmake
+libreoffice
 aria2
 man
 dmenu
