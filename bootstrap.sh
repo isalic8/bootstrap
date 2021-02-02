@@ -103,7 +103,7 @@ misc_setup(){
 	# Uncomplicated firewall
 	sudo ufw enable
 	# Flatpak repos
-	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+	sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 	# Tor with obfs4 bridges
 #	sudo echo "UseBridges 1" >> /etc/tor/torrc
 #	sudo echo "ClientTransportPlugin obfs2,obfs3,obfs4,scramblesuit exec /usr/bin/obfs4proxy" >> /etc/tor/torrc
@@ -122,6 +122,7 @@ misc_setup(){
 	sudo sysctl vm.swappiness=5
 	# Setting default applications
 	xdg-mime default feh.desktop image/png image/jpeg image/jpg
+	xdg-mime default mpv.desktop image/gif
 }
 
 clone

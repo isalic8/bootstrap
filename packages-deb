@@ -265,3 +265,4 @@ devscripts
 fontconfig
 obs-studio
 v4l2loopback-dkms
+genisoimage
