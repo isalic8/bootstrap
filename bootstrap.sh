@@ -28,19 +28,19 @@ suckless_install(){
 
 software_install(){
 	#/bin/bash -c "$(curl -sL https://git.io/vokNn)"
-	#sudo apt install aptitude aria2 -y
 	if [ "$ARCH" = "arm64" ] || [ "$ARCH" = "aarch64" ]; then
-		#sudo apt-fast install -y $(grep -vE "^\s*#" /opt/bootstrap/packages-arm64-deb | tr "\n" " ")
+		sudo dpkg --add-architecture arm64
 		sudo apt install -y $(sed '/#.*/d' /opt/bootstrap/packages-arm64-deb | tr "\n" " ")
 	else
-		sudo dpkg--add-architecture i386 && sudo apt update
-		#sudo apt-fast install -y $(grep -vE "^\s*#" /opt/bootstrap/packages-deb | tr "\n" " ")
+		sudo dpkg --add-architecture i386 && sudo apt update
 		sudo apt install -y $(sed '/#.*/d' /opt/bootstrap/packages-deb | tr "\n" " ")
 	fi
 
 	sudo apt remove youtube-dl -y
-	npm install -g bash-language-server instant-markdown-d
-	pip3 install --user $(cat /opt/bootstrap/packages-python)
+	npm install -g bash-language-server 
+	#instant-markdown-d
+	pip3 install --user $(cat /opt/bootstrap/packages-python3)
+	pip install --user $(cat /opt/bootstrap/packages-python)
 	# Language server for coc-vim latex
 	digestif
 }
@@ -66,6 +66,7 @@ misc_install(){
 	./gomuks
 	./mutt-wizard
 	./v4l2loopback
+	./bible
 }
 
 disable_services(){
@@ -125,9 +126,9 @@ misc_setup(){
 	xdg-mime default mpv.desktop image/gif
 }
 
-clone
-software_install
-suckless_install
+#clone
+#software_install
+#suckless_install
 misc_install
 misc_setup
 disable_services

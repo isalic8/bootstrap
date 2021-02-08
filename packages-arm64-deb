@@ -250,7 +250,7 @@ exiftool
 attr
 wget
 bluez-firmware
-bluez-utils
+bluez
 blueman
 wmctrl
 devscripts
@@ -270,3 +270,4 @@ libegl1-mesa
 libegl1
 libegl-mesa0
 genisoimage
+dracut
