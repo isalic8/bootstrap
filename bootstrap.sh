@@ -69,6 +69,23 @@ misc_install(){
 	./bible
 }
 
+hosts_install(){
+	sudo wget https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts -O /etc/hosts
+	sudo sed -i "s/127.0.0.1 localhost/127.0.0.1 localhost $(hostname)/g" /etc/hosts
+	sudo sed -i "s/127.0.0.1 localhost.localdomain/127.0.0.1 localhost.localdomain $(hostname)/g" /etc/hosts
+	sudo sed -i "s/127.0.0.1 local/127.0.0.1 local $(hostname)/g" /etc/hosts
+	sudo sed -i "s/255.255.255.255 broadcasthost/255.255.255.255 broadcasthost $(hostname)/g" /etc/hosts
+	sudo sed -i "s/::1 localhost/::1 localhost $(hostname)/g" /etc/hosts
+	sudo sed -i "s/::1 ip6-localhost/::1 ip6-localhost $(hostname)/g" /etc/hosts
+	sudo sed -i "s/::1 ip6-loopback/::1 ip6-loopback $(hostname)/g" /etc/hosts
+	sudo sed -i "s/fe80::1%lo0 localhost/fe80::1%lo0 localhost $(hostname)/g" /etc/hosts
+	sudo sed -i "s/ff00::0 ip6-localnet/ff00::0 ip6-localnet $(hostname)/g" /etc/hosts
+	sudo sed -i "s/ff00::0 ip6-mcastprefix/ff00::0 ip6-mcastprefix $(hostname)/g" /etc/hosts
+	sudo sed -i "s/ff02::1 ip6-allnodes/ff02::1 ip6-allnodes $(hostname)/g" /etc/hosts
+	sudo sed -i "s/ff02::2 ip6-allrouters/ff02::2 ip6-allrouters $(hostname)/g" /etc/hosts
+	sudo sed -i "s/ff02::3 ip6-allhosts/ff02::3 ip6-allhosts $(hostname)/g" /etc/hosts
+}
+
 disable_services(){
 	case "$INIT" in
 		openrc) 
@@ -126,9 +143,10 @@ misc_setup(){
 	xdg-mime default mpv.desktop image/gif
 }
 
-#clone
-#software_install
-#suckless_install
+clone
+software_install
+suckless_install
 misc_install
+hosts_install
 misc_setup
 disable_services

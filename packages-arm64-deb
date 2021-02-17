@@ -1,4 +1,5 @@
 cmake
+ttf-mscorefonts-installer
 libreoffice
 aria2
 ffmpegthumbnailer
@@ -98,7 +99,6 @@ gnupg-agent
 info
 spice-client-gtk
 g++
-chocolate-doom
 joystick
 jstest-gtk
 figlet
