@@ -1,6 +1,7 @@
 cmake
+wkhtmltopdf
+patat
 ttf-mscorefonts-installer
-libreoffice
 aria2
 man
 dmenu

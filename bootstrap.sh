@@ -8,7 +8,6 @@ clone(){
 	git clone github:/isalic8/dwm.git
 	git clone github:/isalic8/dwmblocks.git
 	git clone github:/isalic8/st.git
-	git clone github:/isalic8/dotfiles.git ~/.dotfiles
 	git clone github:/isalic8/dox.git ~/dox
 	git clone github:/isalic8/installers.git
 	git clone github:/isalic8/env.git
@@ -27,20 +26,22 @@ suckless_install(){
 }
 
 software_install(){
-	#/bin/bash -c "$(curl -sL https://git.io/vokNn)"
+	sudo apt install aptitude -y
 	if [ "$ARCH" = "arm64" ] || [ "$ARCH" = "aarch64" ]; then
 		sudo dpkg --add-architecture arm64
-		sudo apt install -y $(sed '/#.*/d' /opt/bootstrap/packages-arm64-deb | tr "\n" " ")
+		sudo aptitude install -y $(sed '/#.*/d' /opt/bootstrap/packages-arm64-deb | tr "\n" " ")
 	else
-		sudo dpkg --add-architecture i386 && sudo apt update
-		sudo apt install -y $(sed '/#.*/d' /opt/bootstrap/packages-deb | tr "\n" " ")
+		sudo dpkg --add-architecture i386 && sudo aptitude update
+		sudo aptitude install -y $(sed '/#.*/d' /opt/bootstrap/packages-deb | tr "\n" " ")
 	fi
 
-	sudo apt remove youtube-dl -y
-	npm install -g bash-language-server 
-	#instant-markdown-d
+	sudo aptitude remove youtube-dl -y
+	npm install -g $(cat /opt/bootstrap/packages-npm)
+	#npm cache clean --force
 	pip3 install --user $(cat /opt/bootstrap/packages-python3)
 	pip install --user $(cat /opt/bootstrap/packages-python)
+	sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+	sudo flatpak install $(cat /opt/bootstrap/packages-flatpak)
 	# Language server for coc-vim latex
 	digestif
 }
@@ -120,8 +121,6 @@ misc_setup(){
 	sudo updatedb
 	# Uncomplicated firewall
 	sudo ufw enable
-	# Flatpak repos
-	sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 	# Tor with obfs4 bridges
 #	sudo echo "UseBridges 1" >> /etc/tor/torrc
 #	sudo echo "ClientTransportPlugin obfs2,obfs3,obfs4,scramblesuit exec /usr/bin/obfs4proxy" >> /etc/tor/torrc
