@@ -1,52 +1,58 @@
-#!/bin/sh
-ARCH=$(arch)
-INIT=systemd
-#INIT=openrc
+all: _Packages _PackagesPython _PackagesNpm _PackagesFlatpak _Setup _SourcePackages _Adblock _Mimetypes
 
-clone(){
+_Packages:
+	ARCH=$(arch)
+	sudo apt install aptitude -y
+	if [ "$ARCH" = "arm64" ] || [ "$ARCH" = "aarch64" ]; then
+		sudo dpkg --add-architecture arm64
+		sudo aptitude install -y $(sed '/#.*/d' ./assets/packages-arm64-deb | tr "\n" " ")
+	else
+		sudo dpkg --add-architecture i386 && sudo aptitude update
+		sudo aptitude install -y $(sed '/#.*/d' ./assets/packages-deb | tr "\n" " ")
+	fi
+	sudo aptitude remove youtube-dl -y
+	# Language server for coc-vim latex
+	digestif
+
+_PackagesPython:
+	pip3 install --user $(cat ./assets/packages-python3)
+	pip install --user $(cat ./assets/packages-python)
+
+_PackagesNpm:
+	npm install -g $(cat ./assets/packages-npm)
+	#npm cache clean --force
+
+_PackagesFlatpak:
+	sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+	#sudo flatpak install $(cat ./assets/packages-flatpak)
+
+_Setup:
+	sudo chown -R anon:anon /opt/
 	cd /opt
-	git clone github:/isalic8/dwm.git
-	git clone github:/isalic8/dwmblocks.git
-	git clone github:/isalic8/st.git
-	git clone github:/isalic8/dox.git ~/dox
-	git clone github:/isalic8/installers.git
-	git clone github:/isalic8/env.git
-}
-
-suckless_install(){
+	git clone https://github.com/isalic8/dwm.git
+	git clone https://github.com/isalic8/dwmblocks.git
+	git clone https://github.com/isalic8/st.git
+	git clone https://github.com/isalic8/dotfiles.git ~/.dotfiles
+	git clone https://github.com/isalic8/installers.git
+	git clone https://github.com/isalic8/env.git
+	# Dotfiles
+	cd ~/.dotfiles
+	rm ~/.bashrc
+	stow *
+	sudo install -m 755 "~/.w3m/cgi-bin-root/goto_clipboard.cgi" "/usr/lib/w3m/cgi-bin/goto_clipboard.cgi"
+	sudo install -m 755 "~/.w3m/cgi-bin-root/restore_tab.cgi" "/usr/lib/w3m/cgi-bin/restore_tab.cgi"
+	# Dwm
 	cd /opt/dwm
 	make clean
 	make 
 	sudo make install
-
+	# St
 	cd /opt/st
 	make clean
 	make 
 	sudo make install
-}
 
-software_install(){
-	sudo apt install aptitude -y
-	if [ "$ARCH" = "arm64" ] || [ "$ARCH" = "aarch64" ]; then
-		sudo dpkg --add-architecture arm64
-		sudo aptitude install -y $(sed '/#.*/d' /opt/bootstrap/packages-arm64-deb | tr "\n" " ")
-	else
-		sudo dpkg --add-architecture i386 && sudo aptitude update
-		sudo aptitude install -y $(sed '/#.*/d' /opt/bootstrap/packages-deb | tr "\n" " ")
-	fi
-
-	sudo aptitude remove youtube-dl -y
-	npm install -g $(cat /opt/bootstrap/packages-npm)
-	#npm cache clean --force
-	pip3 install --user $(cat /opt/bootstrap/packages-python3)
-	pip install --user $(cat /opt/bootstrap/packages-python)
-	sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-	sudo flatpak install $(cat /opt/bootstrap/packages-flatpak)
-	# Language server for coc-vim latex
-	digestif
-}
-
-misc_install(){
+_SourcePackages:
 	cd /opt/installers
 	./nyancat
 	./tty-clock
@@ -62,15 +68,14 @@ misc_install(){
 	./xbanish
 	./scrot
 	./unshorten-url-js
-	./undercover
+	#./undercover
+	./lemonbar
 	./sc-im
-	./gomuks
 	./mutt-wizard
 	./v4l2loopback
 	./bible
-}
 
-hosts_install(){
+_Adblock:
 	sudo wget https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts -O /etc/hosts
 	sudo sed -i "s/127.0.0.1 localhost/127.0.0.1 localhost $(hostname)/g" /etc/hosts
 	sudo sed -i "s/127.0.0.1 localhost.localdomain/127.0.0.1 localhost.localdomain $(hostname)/g" /etc/hosts
@@ -85,36 +90,23 @@ hosts_install(){
 	sudo sed -i "s/ff02::1 ip6-allnodes/ff02::1 ip6-allnodes $(hostname)/g" /etc/hosts
 	sudo sed -i "s/ff02::2 ip6-allrouters/ff02::2 ip6-allrouters $(hostname)/g" /etc/hosts
 	sudo sed -i "s/ff02::3 ip6-allhosts/ff02::3 ip6-allhosts $(hostname)/g" /etc/hosts
-}
 
-disable_services(){
-	case "$INIT" in
-		openrc) 
-			sudo rc-update del apache2
-			sudo rc-update del lightdm
-			sudo rc-update del smbd
-			sudo rc-update del exim4
-			sudo rc-update del samba-ad-dc
-			sudo rc-update del slim
-			sudo rc-update del transmission-daemon
-			sudo rc-update del mpd
-			sudo rc-update del ssh
-			;;
-		systemd)
-			sudo systemctl disable apache2
-			sudo systemctl disable lightdm
-			sudo systemctl disable smbd
-			sudo systemctl disable exim4
-			sudo systemctl disable samba-ad-dc
-			sudo systemctl disable slim
-			sudo systemctl disable transmission-daemon
-			sudo systemctl disable mpd
-			sudo systemctl disable ssh
-			;;
-	esac
-}
+_Mimetypes:
+	xdg-mime default feh.desktop image/png image/jpeg image/jpg
+	xdg-mime default mpv.desktop image/gif
 
-misc_setup(){
+_DisableServices:
+	sudo systemctl disable apache2
+	sudo systemctl disable lightdm
+	sudo systemctl disable smbd
+	sudo systemctl disable exim4
+	sudo systemctl disable samba-ad-dc
+	sudo systemctl disable slim
+	sudo systemctl disable transmission-daemon
+	sudo systemctl disable mpd
+	sudo systemctl disable ssh
+
+_MiscSetup:
 	# Download tldr database
 	tldr -u
 	# Update locate database
@@ -130,22 +122,8 @@ misc_setup(){
 #	sudo sed -i 's/#STOP_CHARGE_THRESH_BAT0=80/STOP_CHARGE_THRESH_BAT0=80/g' /etc/default/tlp
 	#sudo rc-service tlp restart
 #	sudo systemctl restart tlp 
-	# Swappiness level to avoid ssd wear
+	# Swappiness level to reduce disk writes
 	sudo sysctl vm.swappiness=5
 	sudo usermod -aG lp,lpadmin,floppy,dialout,audio,video,cdrom,plugdev,netdev $USER
 	# Disables beep sound on xterm
 #	sudo echo "blacklist pcspkr" >> /etc/modprobe.d/blacklist.conf
-	# Change swappiness level to something flash friendly
-	sudo sysctl vm.swappiness=5
-	# Setting default applications
-	xdg-mime default feh.desktop image/png image/jpeg image/jpg
-	xdg-mime default mpv.desktop image/gif
-}
-
-clone
-software_install
-suckless_install
-misc_install
-hosts_install
-misc_setup
-disable_services
