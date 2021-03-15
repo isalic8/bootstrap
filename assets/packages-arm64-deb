@@ -1,4 +1,5 @@
 cmake
+fbreader
 groff
 slop
 wkhtmltopdf
