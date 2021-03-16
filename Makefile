@@ -30,6 +30,7 @@ _Setup:
 	sudo chown -R anon:anon /opt/
 	cd /opt
 	git clone https://github.com/isalic8/dwm.git
+	git clone https://github.com/isalic8/dmenu.git
 	git clone https://github.com/isalic8/dwmblocks.git
 	git clone https://github.com/isalic8/st.git
 	git clone https://github.com/isalic8/dotfiles.git ~/.dotfiles
@@ -48,6 +49,11 @@ _Setup:
 	sudo make install
 	# St
 	cd /opt/st
+	make clean
+	make 
+	sudo make install
+	#Dmenu
+	cd /opt/dmenu
 	make clean
 	make 
 	sudo make install
