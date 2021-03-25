@@ -1,4 +1,5 @@
 cmake
+bat
 fbreader
 groff
 slop

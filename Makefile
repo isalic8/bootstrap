@@ -38,7 +38,7 @@ _Setup:
 	git clone https://github.com/isalic8/env.git
 	# Dotfiles
 	cd ~/.dotfiles
-	rm ~/.bashrc
+	rm ~/.bashrc ~/.profile
 	stow *
 	sudo install -m 755 "~/.w3m/cgi-bin-root/goto_clipboard.cgi" "/usr/lib/w3m/cgi-bin/goto_clipboard.cgi"
 	sudo install -m 755 "~/.w3m/cgi-bin-root/restore_tab.cgi" "/usr/lib/w3m/cgi-bin/restore_tab.cgi"
@@ -57,6 +57,9 @@ _Setup:
 	make clean
 	make 
 	sudo make install
+
+_Doas:
+	install -o root -g root assets/doas.conf /etc/doas.conf
 
 _SourcePackages:
 	cd /opt/installers
