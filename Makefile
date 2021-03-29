@@ -83,6 +83,7 @@ _SourcePackages:
 	./mutt-wizard
 	./v4l2loopback
 	./bible
+	./bsp-layout
 
 _Adblock:
 	sudo wget https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts -O /etc/hosts
