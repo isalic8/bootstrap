@@ -1,38 +1,40 @@
-all: _Packages _PackagesPython _PackagesNpm _PackagesFlatpak _Setup _SourcePackages _Adblock _Mimetypes
+#!/bin/sh
 
-_Packages:
-	ARCH=$(arch)
+_Packages(){
 	sudo apt install aptitude -y
-	if [ "$ARCH" = "arm64" ] || [ "$ARCH" = "aarch64" ]; then
+	sudo aptitude remove youtube-dl -y
+
+	ARCH=$(arch)
+	if [ "$ARCH" = "arm*" ] || [ "$ARCH" = "aarch64" ]; then
 		sudo dpkg --add-architecture arm64
 		sudo aptitude install -y $(sed '/#.*/d' ./assets/packages-arm64-deb | tr "\n" " ")
 	else
 		sudo dpkg --add-architecture i386 && sudo aptitude update
 		sudo aptitude install -y $(sed '/#.*/d' ./assets/packages-deb | tr "\n" " ")
 	fi
-	sudo aptitude remove youtube-dl -y
+
 	# Language server for coc-vim latex
 	digestif
+}
 
-_PackagesPython:
+_PackagesPython(){
 	pip3 install --user $(cat ./assets/packages-python3)
 	pip install --user $(cat ./assets/packages-python)
+}
 
-_PackagesNpm:
+_PackagesNpm(){
 	npm install -g $(cat ./assets/packages-npm)
 	#npm cache clean --force
+}
 
-_PackagesFlatpak:
+_PackagesFlatpak(){
 	sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 	#sudo flatpak install $(cat ./assets/packages-flatpak)
+}
 
-_Setup:
+_PersonalSetup(){
 	sudo chown -R anon:anon /opt/
 	cd /opt
-	git clone https://github.com/isalic8/dwm.git
-	git clone https://github.com/isalic8/dmenu.git
-	git clone https://github.com/isalic8/dwmblocks.git
-	git clone https://github.com/isalic8/st.git
 	git clone https://github.com/isalic8/dotfiles.git ~/.dotfiles
 	git clone https://github.com/isalic8/installers.git
 	git clone https://github.com/isalic8/env.git
@@ -42,26 +44,13 @@ _Setup:
 	stow *
 	sudo install -m 755 "~/.w3m/cgi-bin-root/goto_clipboard.cgi" "/usr/lib/w3m/cgi-bin/goto_clipboard.cgi"
 	sudo install -m 755 "~/.w3m/cgi-bin-root/restore_tab.cgi" "/usr/lib/w3m/cgi-bin/restore_tab.cgi"
-	# Dwm
-	cd /opt/dwm
-	make clean
-	make 
-	sudo make install
-	# St
-	cd /opt/st
-	make clean
-	make 
-	sudo make install
-	#Dmenu
-	cd /opt/dmenu
-	make clean
-	make 
-	sudo make install
+}
 
-_Doas:
+_Doas(){
 	install -o root -g root assets/doas.conf /etc/doas.conf
+}
 
-_SourcePackages:
+_SourcePackages(){
 	cd /opt/installers
 	./nyancat
 	./tty-clock
@@ -77,15 +66,17 @@ _SourcePackages:
 	./xbanish
 	./scrot
 	./unshorten-url-js
-	#./undercover
 	./lemonbar
 	./sc-im
 	./mutt-wizard
 	./v4l2loopback
 	./bible
 	./bsp-layout
+	./st
+	./dmenu
+}
 
-_Adblock:
+_Adblock(){
 	sudo wget https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts -O /etc/hosts
 	sudo sed -i "s/127.0.0.1 localhost/127.0.0.1 localhost $(hostname)/g" /etc/hosts
 	sudo sed -i "s/127.0.0.1 localhost.localdomain/127.0.0.1 localhost.localdomain $(hostname)/g" /etc/hosts
@@ -100,12 +91,14 @@ _Adblock:
 	sudo sed -i "s/ff02::1 ip6-allnodes/ff02::1 ip6-allnodes $(hostname)/g" /etc/hosts
 	sudo sed -i "s/ff02::2 ip6-allrouters/ff02::2 ip6-allrouters $(hostname)/g" /etc/hosts
 	sudo sed -i "s/ff02::3 ip6-allhosts/ff02::3 ip6-allhosts $(hostname)/g" /etc/hosts
+}
 
-_Mimetypes:
+_Mimetypes(){
 	xdg-mime default feh.desktop image/png image/jpeg image/jpg
 	xdg-mime default mpv.desktop image/gif
+}
 
-_DisableServices:
+_DisableServices(){
 	sudo systemctl disable apache2
 	sudo systemctl disable lightdm
 	sudo systemctl disable smbd
@@ -115,8 +108,9 @@ _DisableServices:
 	sudo systemctl disable transmission-daemon
 	sudo systemctl disable mpd
 	sudo systemctl disable ssh
+}
 
-_MiscSetup:
+_MiscSetup(){
 	# Download tldr database
 	tldr -u
 	# Update locate database
@@ -137,3 +131,16 @@ _MiscSetup:
 	sudo usermod -aG lp,lpadmin,floppy,dialout,audio,video,cdrom,plugdev,netdev $USER
 	# Disables beep sound on xterm
 #	sudo echo "blacklist pcspkr" >> /etc/modprobe.d/blacklist.conf
+}
+
+case $1 in
+	Packages) _Packages;;
+	PackagesPython) _PackagesPython;;
+	PackagesNpm) _PackagesNpm;;
+	PackagesFlatpak) _PackagesFlatpak;;
+	Setup) _Setup;;
+	SourcePackages) _SourcePackages;;
+	Adblock) _Adblock;;
+	Mimetypes) _Mimetypes;;
+	All) _Packages _PackagesPython _PackagesNpm _PackagesFlatpak _Setup _SourcePackages _Adblock _Mimetypes;;
+esac
