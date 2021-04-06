@@ -12,9 +12,10 @@ _Packages(){
 		sudo dpkg --add-architecture i386 && sudo aptitude update
 		sudo aptitude install -y $(sed '/#.*/d' ./assets/packages-deb | tr "\n" " ")
 	fi
+}
 
-	# Language server for coc-vim latex
-	digestif
+_PackagesLib(){
+	sudo aptitude install -y $(sed '/#.*/d' ./assets/packages-lib| tr "\n" " ")
 }
 
 _PackagesPython(){
@@ -23,7 +24,9 @@ _PackagesPython(){
 }
 
 _PackagesNpm(){
-	npm install -g $(cat ./assets/packages-npm)
+	[ ! -d "$HOME/.node/lib" ] && mkdir -p "$HOME/.node/lib"
+	export NODE_PATH="$HOME/.node/lib/node_modules:$NODE_PATH"
+	npm install $(cat ./assets/packages-npm)
 	#npm cache clean --force
 }
 
@@ -35,15 +38,16 @@ _PackagesFlatpak(){
 _PersonalSetup(){
 	sudo chown -R anon:anon /opt/
 	cd /opt
-	git clone https://github.com/isalic8/dotfiles.git ~/.dotfiles
+	git clone https://github.com/isalic8/dotfiles.git $HOME/.dotfiles
 	git clone https://github.com/isalic8/installers.git
 	git clone https://github.com/isalic8/env.git
 	# Dotfiles
-	cd ~/.dotfiles
-	rm ~/.bashrc ~/.profile
+	cd $HOME/.dotfiles
+	rm $HOME/.bashrc $HOME/.profile
 	stow *
-	sudo install -m 755 "~/.w3m/cgi-bin-root/goto_clipboard.cgi" "/usr/lib/w3m/cgi-bin/goto_clipboard.cgi"
-	sudo install -m 755 "~/.w3m/cgi-bin-root/restore_tab.cgi" "/usr/lib/w3m/cgi-bin/restore_tab.cgi"
+	sudo install -m 755 "$HOME/.w3m/cgi-bin-root/goto_clipboard.cgi" "/usr/lib/w3m/cgi-bin/goto_clipboard.cgi"
+	sudo install -m 755 "$HOME/.w3m/cgi-bin-root/restore_tab.cgi" "/usr/lib/w3m/cgi-bin/restore_tab.cgi"
+	#digestif
 }
 
 _Doas(){
@@ -135,12 +139,13 @@ _MiscSetup(){
 
 case $1 in
 	Packages) _Packages;;
+	PackagesLib) _PackagesLib;;
 	PackagesPython) _PackagesPython;;
 	PackagesNpm) _PackagesNpm;;
 	PackagesFlatpak) _PackagesFlatpak;;
-	Setup) _Setup;;
+	PersonalSetup) _PersonalSetup;;
 	SourcePackages) _SourcePackages;;
 	Adblock) _Adblock;;
 	Mimetypes) _Mimetypes;;
-	All) _Packages _PackagesPython _PackagesNpm _PackagesFlatpak _Setup _SourcePackages _Adblock _Mimetypes;;
+	All) _Packages _PackagesLib _PackagesPython _PackagesNpm _PackagesFlatpak _PersonalSetup _SourcePackages _Adblock _Mimetypes;;
 esac

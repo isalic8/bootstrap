@@ -1,5 +1,5 @@
 cmake
-bat
+#bat
 groff
 slop
 patat
@@ -34,6 +34,9 @@ imagemagick
 nfs-common
 brightnessctl
 python3-pip
+python-pip
+xinit
+xorg
 pandoc
 texlive-full
 mlocate
@@ -140,7 +143,7 @@ qemu-system
 pavucontrol
 wireguard
 wireguard-dkms
-openmw
+#openmw
 surfraw
 surfraw-extra
 flatpak

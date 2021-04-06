@@ -32,6 +32,9 @@ imagemagick
 nfs-common
 brightnessctl
 python3-pip
+python-pip
+xinit
+xorg
 pandoc
 texlive-full
 mlocate
