@@ -54,7 +54,7 @@ _Doas(){
 	install -o root -g root assets/doas.conf /etc/doas.conf
 }
 
-_SourcePackages(){
+_PackagesSource(){
 	cd /opt/installers
 	./nyancat
 	./tty-clock
@@ -78,6 +78,7 @@ _SourcePackages(){
 	./bsp-layout
 	./st
 	./dmenu
+	./bspwm
 }
 
 _Adblock(){
@@ -121,6 +122,9 @@ _MiscSetup(){
 	sudo updatedb
 	# Uncomplicated firewall
 	sudo ufw enable
+	# Smartcard support
+	sudo systemctl enable pcscd
+	sudo systemctl start pcscd
 	# Tor with obfs4 bridges
 #	sudo echo "UseBridges 1" >> /etc/tor/torrc
 #	sudo echo "ClientTransportPlugin obfs2,obfs3,obfs4,scramblesuit exec /usr/bin/obfs4proxy" >> /etc/tor/torrc
@@ -131,8 +135,8 @@ _MiscSetup(){
 	#sudo rc-service tlp restart
 #	sudo systemctl restart tlp 
 	# Swappiness level to reduce disk writes
-	sudo sysctl vm.swappiness=5
-	sudo usermod -aG lp,lpadmin,floppy,dialout,audio,video,cdrom,plugdev,netdev $USER
+	sudo sysctl -w vm.swappiness=5
+	sudo usermod -aG lp,lpadmin,floppy,dialout,audio,video,cdrom,plugdev,netdev,debian-transmission $USER
 	# Disables beep sound on xterm
 #	sudo echo "blacklist pcspkr" >> /etc/modprobe.d/blacklist.conf
 }
@@ -144,8 +148,8 @@ case $1 in
 	PackagesNpm) _PackagesNpm;;
 	PackagesFlatpak) _PackagesFlatpak;;
 	PersonalSetup) _PersonalSetup;;
-	SourcePackages) _SourcePackages;;
+	PackagesSource) _PackagesSource;;
 	Adblock) _Adblock;;
 	Mimetypes) _Mimetypes;;
-	All) _Packages _PackagesLib _PackagesPython _PackagesNpm _PackagesFlatpak _PersonalSetup _SourcePackages _Adblock _Mimetypes;;
+	All) _Packages _PackagesLib _PackagesPython _PackagesNpm _PackagesFlatpak _PersonalSetup _PackagesSource _Adblock _Mimetypes;;
 esac

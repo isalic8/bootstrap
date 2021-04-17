@@ -158,8 +158,15 @@ zsh
 gparted
 task-spooler
 xdotool
-bspwm
 lpr
+hopenpgp-tools
+kpcli
+libssl-dev
+swig
+unrar-free
+parallel
+libpcsclite-dev
+yubikey-personalization
 cups
 cups-client
 asciidoc
