@@ -106,6 +106,7 @@ _Mimetypes(){
 _DisableServices(){
 	sudo systemctl disable apache2
 	sudo systemctl disable lightdm
+	sudo systemctl disable tor
 	sudo systemctl disable smbd
 	sudo systemctl disable exim4
 	sudo systemctl disable samba-ad-dc
