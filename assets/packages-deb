@@ -165,6 +165,7 @@ libssl-dev
 swig
 unrar-free
 parallel
+tcpdump
 libpcsclite-dev
 yubikey-personalization
 cups
