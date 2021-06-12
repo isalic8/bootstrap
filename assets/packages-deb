@@ -1,6 +1,10 @@
 cmake
-bat
+#bat
 groff
+apt-file
+xdo
+default-jdk
+default-jre
 slop
 patat
 ttf-mscorefonts-installer
@@ -178,7 +182,7 @@ attr
 wget
 firmware-linux
 bluez-firmware
-bluez-utils
+#bluez-utils
 blueman
 ffmpegthumbnailer
 wmctrl

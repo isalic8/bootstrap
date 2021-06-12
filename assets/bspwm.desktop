@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Bspwm
+Comment=Bspwm
+Exec=/usr/local/bin/bspwm
+TryExec=/usr/local/bin/bspwm
+Type=Application
+#Icon=openbox

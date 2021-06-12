@@ -1,4 +1,5 @@
 cmake
+apt-file
 #bat
 groff
 slop

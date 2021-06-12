@@ -51,7 +51,8 @@ _PersonalSetup(){
 }
 
 _Doas(){
-	install -o root -g root assets/doas.conf /etc/doas.conf
+	/opt/installers/doas
+	sudo install -o root -g root assets/doas.conf /etc/doas.conf
 }
 
 _PackagesSource(){
@@ -69,7 +70,7 @@ _PackagesSource(){
 	./youtube-dl
 	./xbanish
 	./scrot
-	./unshorten-url-js
+	#./unshorten-url-js
 	./lemonbar
 	./sc-im
 	./mutt-wizard
@@ -79,6 +80,7 @@ _PackagesSource(){
 	./st
 	./dmenu
 	./bspwm
+	./picom-jonaburg
 }
 
 _Adblock(){
@@ -140,6 +142,10 @@ _MiscSetup(){
 	sudo usermod -aG lp,lpadmin,floppy,dialout,audio,video,cdrom,plugdev,netdev,debian-transmission $USER
 	# Disables beep sound on xterm
 #	sudo echo "blacklist pcspkr" >> /etc/modprobe.d/blacklist.conf
+	# Apt file
+	sudo apt-file update
+	# Bspwm session
+	sudo install -o root -m 644 bspwm.desktop /usr/share/xsessions
 }
 
 case $1 in
@@ -152,5 +158,6 @@ case $1 in
 	PackagesSource) _PackagesSource;;
 	Adblock) _Adblock;;
 	Mimetypes) _Mimetypes;;
-	All) _Packages _PackagesLib _PackagesPython _PackagesNpm _PackagesFlatpak _PersonalSetup _PackagesSource _Adblock _Mimetypes;;
+	Doas) _Doas;;
+	All) _Packages ; _PackagesLib ; _PackagesPython ; _PackagesNpm ; _PackagesFlatpak ; _PersonalSetup ; _PackagesSource ; _Adblock ; _Mimetypes;;
 esac

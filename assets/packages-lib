@@ -87,3 +87,6 @@ libegl-mesa0
 autotools-dev
 uthash-dev
 devscripts
+libxcb-util0-dev
+libxcb-keysyms1-dev
+libharfbuzz-dev
